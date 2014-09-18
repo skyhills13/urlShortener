@@ -37,7 +37,7 @@ public class Insert extends HttpServlet {
     String contextPath = request.getContextPath();
     String shortUrl = null;
     try {
-        shortUrl = new Logic().getShort(serverName, port, contextPath,
+        shortUrl = new RedisLogic().getShort(serverName, port, contextPath,
             longUrl);
     } catch (Exception e) {
  
