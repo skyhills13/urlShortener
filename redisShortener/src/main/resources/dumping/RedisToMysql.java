@@ -5,14 +5,12 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import redisShortener.Logic;
-
 public class RedisToMysql {
 
 	private static Logic logic = new Logic();
 
 	public static void main(String[] args) throws IllegalAccessException, ClassNotFoundException, IOException, SQLException {
-		insert("/home/next/Application/tomcat/webapps/redisCommands");
+		insert("/home/next/Applications/tomcat/webapps/redisCommands");
 	}
 	
 	public static void insert(String fileName) throws IOException,
