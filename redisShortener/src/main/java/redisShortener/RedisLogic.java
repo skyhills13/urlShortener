@@ -1,13 +1,12 @@
 package redisShortener;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.util.UUID;
 
 import redis.clients.jedis.Jedis;
+
 
 public class RedisLogic {
 
@@ -22,9 +21,12 @@ public class RedisLogic {
 
 	public String getShort(String serverName, int port, String contextPath,
 			String longUrl) throws Exception {
-
-		String shortUrl = jedis.hget(LONG_TO_SHORT, longUrl);
 		
+		File redisCommands = new File("/Users/soeunpark/Documents/redisCommands");
+		
+		BufferedWriter out = new BufferedWriter(new FileWriter(redisCommands));
+		
+		String shortUrl = jedis.hget(LONG_TO_SHORT, longUrl);
 		
 		System.out.println(shortUrl);
 		if (shortUrl != null) {
@@ -37,13 +39,16 @@ public class RedisLogic {
 			jedis.hset(LONG_TO_SHORT, longUrl, shortUrl);
 			jedis.hset(SHORT_TO_LONG, shortUrl, longUrl);
 //			jedis.set(longUrl, makeShort(longUrl));
+
+			out.write((new StringBuffer()).append(longUrl).append(",").append(shortUrl).append("\n").toString());
 			
 			// after we insert the record, we obtain the ID as identifier of our
 			// new short link
 			System.out.println(shortUrl + ", " + jedis.hget(LONG_TO_SHORT, longUrl));
 			System.out.println(jedis.hget(SHORT_TO_LONG, shortUrl));
 		}
-		
+		out.flush();
+		out.close();
 		return "http://" + serverName + ":" + port + contextPath + "/" + shortUrl;
 	}
 
