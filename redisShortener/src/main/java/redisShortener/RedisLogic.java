@@ -22,7 +22,7 @@ public class RedisLogic {
 	public String getShort(String serverName, int port, String contextPath,
 			String longUrl) throws Exception {
 		
-		File redisCommands = new File("/Users/soeunpark/Documents/redisCommands");
+		File redisCommands = new File("./redisCommands");
 		
 		BufferedWriter out = new BufferedWriter(new FileWriter(redisCommands));
 		
