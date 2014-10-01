@@ -24,7 +24,7 @@ public class RedisLogic {
 		
 		File redisCommands = new File("./redisCommands");
 		
-		BufferedWriter out = new BufferedWriter(new FileWriter(redisCommands));
+		BufferedWriter out = new BufferedWriter(new FileWriter(redisCommands, true));
 		
 		String shortUrl = jedis.hget(LONG_TO_SHORT, longUrl);
 		
@@ -39,9 +39,10 @@ public class RedisLogic {
 			jedis.hset(LONG_TO_SHORT, longUrl, shortUrl);
 			jedis.hset(SHORT_TO_LONG, shortUrl, longUrl);
 //			jedis.set(longUrl, makeShort(longUrl));
-
-			out.write((new StringBuffer()).append(longUrl).append(",").append(shortUrl).append("\n").toString());
+					
 			
+			out.write((new StringBuffer()).append(longUrl).append(",").append(shortUrl).append("\n").toString());
+	
 			// after we insert the record, we obtain the ID as identifier of our
 			// new short link
 			System.out.println(shortUrl + ", " + jedis.hget(LONG_TO_SHORT, longUrl));
